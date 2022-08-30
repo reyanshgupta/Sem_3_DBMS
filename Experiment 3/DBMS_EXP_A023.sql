@@ -1,0 +1,14 @@
+CREATE TABLE Category_header(cat_code number(5), cat_desc varchar(20), constraints at_pk Primary Key(cat_code));
+CREATE TABLE Route_header(route_id number(5), route_no number(5), cat_code number(5), origin varchar(20), destination varchar(20), fare number(7,2), distance number(3),capacity number(3), constraints route_pk Primary Key (route_id), Foreign Key (cat_code) References Category_header (cat_code));
+CREATE TABLE Place_header (place_id number(5), place_name varchar(20) NOT NULL, place_address varchar(50), bus_station varchar(10), constraints bs_pk Primary Key(place_id));
+CREATE TABLE Fleet_header (fleet_id number(5), day date, route_id number(5), cat_code number(5), constraints fi_pk PRIMARY KEY(fleet_id), FOREIGN KEY (route_id) REFERENCES route_header (route_id),FOREIGN KEY (cat_code) REFERENCES category_header(cat_code));
+CREATE TABLE Ticket_header (fleet_id number(5), ticket_no number(5), doi date NOT NULL, dot date NOT NULL, time_travel char(8), board_place varchar(20), origin varchar(40), destination varchar(40), adult number(3), children number(3), total_fare number(7,2), route_id number(5), constraints tnpk PRIMARY KEY(Ticket_no), FOREIGN KEY (Fleet_id) REFERENCES fleet_header(fleet_id), foreign key (route_id) references route_header(route_id));
+CREATE TABLE ticket_detail (ticket_no number(5), name varchar(20), sex char(1), age number(3), fare number(5,2));
+CREATE TABLE route_detail (route_id number(5), place_id number(5), nonstop char(1));
+INSERT INTO category_header values (&cat_code, '&cat_desc');
+INSERT INTO Route_header VALUES (&route_id, &route_no, &cat_code, '&origin', '&destination', &fare, &distance, &capacity);
+INSERT INTO Place_header VALUES (&place_id, '&place_name', '&place_address', '&bus_station');
+INSERT INTO Fleet_header VALUES (&Fleet_id, &day, &route_id, &cat_code);
+INSERT INTO Ticket_header VALUES (&fleet_id, &ticket_no, &doi, &dot, '&time_travel','&board_place', '&origin', '&destination', &adults, &children, &total_fare, &route_id);
+INSERT INTO Ticket_detail VALUES (&ticket_no, '&name', '&sex', &age, '&fare');
+INSERT INTO Route_detail VALUES (&route_id, &place_id, '&nonstop');
